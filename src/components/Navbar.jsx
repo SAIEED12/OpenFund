@@ -17,7 +17,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Link from "next/link";
 
 const navLinks = [
   { label: "Explore", href: "/campaigns" },
@@ -49,11 +48,6 @@ const LogoMark = () => (
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const simulateSignIn = () => {
-    setIsLoggedIn(true);
-    setMenuOpen(false);
-  };
 
   const handleSignOut = () => {
     setIsLoggedIn(false);
@@ -148,14 +142,9 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link
-              href={"/"}
-                variant="ghost"
-                className="hidden sm:inline-flex hover:bg-gray-100"
-                onClick={simulateSignIn}
-              >
-                Sign In
-              </Link>
+              <Button asChild variant="ghost" className="hidden sm:inline-flex">
+                <NextLink href="/sign-in">Sign In</NextLink>
+              </Button>
               <Button asChild className="hidden sm:inline-flex">
                 <NextLink href="/start">
                   <Rocket />
@@ -230,8 +219,10 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="space-y-1 border-t border-border pt-3">
-                <Button variant="outline" className="w-full" onClick={simulateSignIn}>
-                  Sign In
+                <Button variant="outline" className="w-full" asChild>
+                  <NextLink href="/sign-in" onClick={() => setMenuOpen(false)}>
+                    Sign In
+                  </NextLink>
                 </Button>
                 <Button className="w-full" asChild>
                   <NextLink href="/start" onClick={() => setMenuOpen(false)}>
