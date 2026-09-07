@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import NextLink from "next/link";
-import { Link as HeroLink } from "@heroui/react";
 import { Coins, Heart, LayoutDashboard, LogOut, Menu, Rocket, User, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import LogoMark from "./LogoMark";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -23,28 +23,6 @@ const navLinks = [
   { label: "How It Works", href: "/how-it-works" },
 ];
 
-const LogoMark = () => (
-  <svg viewBox="0 0 32 32" className="size-7 shrink-0" aria-hidden="true">
-    <rect width="32" height="32" rx="8" fill="var(--primary)" />
-    <path
-      d="M9 19.5l4.5-4.5 3.5 3.5L24 11.5"
-      fill="none"
-      stroke="var(--primary-foreground)"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M19 11.5h5v5"
-      fill="none"
-      stroke="var(--primary-foreground)"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -54,43 +32,36 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  const renderNavLink = ({ label, href }) => (
-    <HeroLink
-      key={href}
-      href={href}
-      render={(props) => (
-        <NextLink
-          {...props}
-          className={cn(
-            "px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
-            props.className
-          )}
-        >
-          {label}
-        </NextLink>
-      )}
-    />
-  );
-
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <NextLink href="/" className="flex shrink-0 items-center gap-2">
+    <header className="sticky top-0 z-50 border-b border-border/80 bg-background/85 backdrop-blur-xl">
+      <div className="mx-auto flex h-[68px] w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <NextLink href="/" className="flex shrink-0 items-center gap-2.5" aria-label="OpenFund home">
           <LogoMark />
-          <span className="text-lg font-bold tracking-tight">
-            Open<span className="text-primary">Fund</span>
+          <span className="font-display text-[19px] font-semibold tracking-tight">
+            OpenFund
           </span>
         </NextLink>
 
-        <nav className="hidden items-center md:flex" aria-label="Main navigation">
-          {navLinks.map(renderNavLink)}
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+          {navLinks.map((link) => (
+            <NextLink
+              key={link.href}
+              href={link.href}
+              className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            >
+              {link.label}
+            </NextLink>
+          ))}
         </nav>
 
         <div className="flex items-center gap-2">
           {isLoggedIn ? (
             <>
-              <Badge variant="secondary" className="hidden gap-1 sm:inline-flex">
-                <Coins className="size-3" />
+              <Badge
+                variant="secondary"
+                className="hidden gap-1.5 rounded-full border border-border bg-secondary px-3 py-1.5 font-mono text-xs sm:inline-flex"
+              >
+                <Coins className="size-3.5 text-mint-deep" />
                 250 credits
               </Badge>
               <DropdownMenu>
@@ -98,11 +69,11 @@ const Navbar = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="rounded-full"
+                    className="rounded-full border border-border"
                     aria-label="Account menu"
                   >
                     <Avatar>
-                      <AvatarFallback>JD</AvatarFallback>
+                      <AvatarFallback className="bg-ink text-paper text-xs">JD</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
@@ -142,10 +113,13 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Button asChild variant="ghost" className="hidden sm:inline-flex">
+              <Button asChild variant="ghost" className="hidden rounded-full sm:inline-flex">
                 <NextLink href="/sign-in">Sign In</NextLink>
               </Button>
-              <Button asChild className="hidden sm:inline-flex">
+              <Button
+                asChild
+                className="hidden rounded-full bg-ink px-5 text-paper shadow-sm hover:bg-pine hover:text-paper sm:inline-flex"
+              >
                 <NextLink href="/start">
                   <Rocket />
                   Start a Campaign
@@ -157,7 +131,7 @@ const Navbar = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="rounded-full md:hidden"
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
@@ -168,63 +142,57 @@ const Navbar = () => {
       </div>
 
       {menuOpen && (
-        <div className="border-t border-border md:hidden">
-          <div className="mx-auto w-full max-w-7xl space-y-1 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="border-t border-border bg-background md:hidden">
+          <div className="mx-auto w-full max-w-7xl space-y-1 px-4 py-4 sm:px-6">
             <nav className="flex flex-col" aria-label="Mobile navigation">
               {navLinks.map((link) => (
-                <HeroLink
+                <NextLink
                   key={link.href}
                   href={link.href}
-                  render={(props) => (
-                    <NextLink
-                      {...props}
-                      onClick={() => setMenuOpen(false)}
-                      className={cn(
-                        "rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
-                        props.className
-                      )}
-                    >
-                      {link.label}
-                    </NextLink>
+                  onClick={() => setMenuOpen(false)}
+                  className={cn(
+                    "rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
                   )}
-                />
+                >
+                  {link.label}
+                </NextLink>
               ))}
             </nav>
 
             {isLoggedIn ? (
-              <div className="space-y-1 border-t border-border pt-3">
-                <div className="flex items-center gap-2 px-3 py-2">
-                  <Badge variant="secondary" className="gap-1">
+              <div className="space-y-2 border-t border-border pt-4">
+                <div className="flex items-center gap-2 px-1 py-1">
+                  <Badge variant="secondary" className="gap-1.5 rounded-full font-mono">
                     <Coins className="size-3" />
                     250 credits
                   </Badge>
                   <span className="text-sm text-muted-foreground">Jordan Doe</span>
                 </div>
-                <Button variant="outline" className="w-full" asChild>
+                <Button variant="outline" className="w-full rounded-full" asChild>
                   <NextLink href="/dashboard" onClick={() => setMenuOpen(false)}>
                     <LayoutDashboard />
                     Dashboard
                   </NextLink>
                 </Button>
-                <Button variant="outline" className="w-full" asChild>
+                <Button variant="outline" className="w-full rounded-full" asChild>
                   <NextLink href="/contributions" onClick={() => setMenuOpen(false)}>
                     <Heart />
                     My Contributions
                   </NextLink>
                 </Button>
-                <Button variant="ghost" className="w-full" onClick={handleSignOut}>
+                <Button variant="ghost" className="w-full rounded-full" onClick={handleSignOut}>
                   <LogOut />
                   Sign out
                 </Button>
               </div>
             ) : (
-              <div className="space-y-1 border-t border-border pt-3">
-                <Button variant="outline" className="w-full" asChild>
+              <div className="space-y-2 border-t border-border pt-4">
+                <Button variant="outline" className="w-full rounded-full" asChild>
                   <NextLink href="/sign-in" onClick={() => setMenuOpen(false)}>
                     Sign In
                   </NextLink>
                 </Button>
-                <Button className="w-full" asChild>
+                <Button className="w-full rounded-full bg-ink text-paper" asChild>
                   <NextLink href="/start" onClick={() => setMenuOpen(false)}>
                     <Rocket />
                     Start a Campaign

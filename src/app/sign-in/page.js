@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 
-import LogoMark from "../../components/LogoMark";
+import AuthShell from "../../components/AuthShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,73 +12,55 @@ export const metadata = {
 
 export default function SignInPage() {
   return (
-    <main className="relative flex flex-1 flex-col items-center justify-center overflow-hidden px-4 py-16 sm:px-6 lg:px-8">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_0%,var(--primary)/5%,transparent)]"
-      />
-
-      <div className="relative w-full max-w-md">
-        <div className="rounded-2xl border border-border bg-card shadow-lg shadow-primary/5">
-          <div className="p-8 sm:p-10">
-            <div className="flex flex-col items-center text-center">
-              <NextLink href="/" className="flex items-center gap-2">
-                <LogoMark />
-                <span className="text-lg font-bold tracking-tight">
-                  Open<span className="text-primary">Fund</span>
-                </span>
-              </NextLink>
-
-              <h1 className="mt-6 text-2xl font-bold tracking-tight">
-                Welcome back
-              </h1>
-              <p className="mt-2 text-sm text-muted-foreground text-pretty">
-                Sign in to continue backing great campaigns and tracking your own.
-              </p>
-            </div>
-
-            <form className="mt-8 space-y-5">
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  autoComplete="email"
-                  required
-                />
-              </div>
-
-              <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Your password"
-                  autoComplete="current-password"
-                  required
-                />
-              </div>
-
-              <Button type="submit" size="lg" className="h-11 w-full text-base">
-                Sign in
-              </Button>
-            </form>
-
-            <p className="mt-6 text-center text-sm text-muted-foreground">
-              Don&apos;t have an account?{" "}
-              <NextLink
-                href="/sign-up"
-                className="font-medium text-primary underline-offset-4 hover:underline"
-              >
-                Sign up
-              </NextLink>
-            </p>
-          </div>
+    <AuthShell
+      title="Welcome back"
+      subtitle="Sign in to keep backing great campaigns and track your own."
+      footer={
+        <>
+          Don&apos;t have an account?{" "}
+          <NextLink
+            href="/sign-up"
+            className="font-semibold text-mint-deep underline-offset-4 hover:underline"
+          >
+            Sign up
+          </NextLink>
+        </>
+      }
+    >
+      <form className="space-y-5">
+        <div className="grid gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            autoComplete="email"
+            required
+          />
         </div>
-      </div>
-    </main>
+
+        <div className="grid gap-2">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">Password</Label>
+            <NextLink href="/sign-in" className="text-xs font-medium text-mint-deep hover:underline">
+              Forgot password?
+            </NextLink>
+          </div>
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Your password"
+            autoComplete="current-password"
+            required
+          />
+        </div>
+
+        <Button type="submit" size="lg" className="h-12 w-full rounded-full bg-ink text-[15px] font-semibold text-paper hover:bg-pine">
+          Sign in
+        </Button>
+      </form>
+    </AuthShell>
   );
 }
