@@ -4,6 +4,7 @@ import LogoMark from "../../components/LogoMark";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 export const metadata = {
   title: "Sign Up | OpenFund",
@@ -76,19 +77,19 @@ export default function SignUpPage() {
                 />
               </div>
 
-              <Button type="submit" size="lg" className="h-11 w-full text-base">
+              <Button type="submit" size="lg" className="h-11 w-full text-base cursor-pointer">
                 Create account
               </Button>
             </form>
 
             <p className="mt-6 text-center text-sm text-muted-foreground">
               Already have an account?{" "}
-              <NextLink
+              <Link
                 href="/sign-in"
                 className="font-medium text-primary underline-offset-4 hover:underline"
               >
                 Sign in
-              </NextLink>
+              </Link>
             </p>
           </div>
         </div>
