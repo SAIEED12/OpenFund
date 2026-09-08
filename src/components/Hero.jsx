@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import Image from "next/image";
 import {
   ButtonRoot,
   ChipRoot,
@@ -8,7 +9,12 @@ import {
   AvatarRoot,
   AvatarFallback,
 } from "@heroui/react";
-import { ArrowRight, Globe, Heart, Rocket, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, Heart, Rocket, ShieldCheck, Zap } from "lucide-react";
+
+// Photo: rooftop solar panels (Unsplash, Andreas Gücklhorn)
+// https://unsplash.com/photos/solar-panels-1509391366360-2e959784a276
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80";
 
 const stats = [
   { value: "$2.4M", label: "routed via ledger" },
@@ -78,12 +84,19 @@ const Hero = () => {
 
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
           <CardRoot className="relative overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow">
-            <div className="relative flex h-48 items-center justify-center overflow-hidden bg-gradient-to-br from-[#C2410C] via-[#9A3412] to-[#431407]">
+            <div className="relative h-48 overflow-hidden bg-[#431407]">
+              <Image
+                src={HERO_IMAGE}
+                alt="Rooftop solar panels powering a school building"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 480px"
+                className="object-cover"
+              />
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-[radial-gradient(60%_80%_at_70%_20%,rgb(255_255_255/0.22),transparent_60%)]"
+                className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent"
               />
-              <Globe className="relative size-14 text-white" strokeWidth={1.25} />
               <ChipRoot className="absolute top-4 left-4 inline-flex items-center gap-1 rounded-full bg-white px-3 py-1">
                 <Zap className="size-3 text-[#C2410C]" />
                 <ChipLabel className="text-xs font-semibold text-[#1C1917]">Energy</ChipLabel>

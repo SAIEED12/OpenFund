@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import Image from "next/image";
 import { BadgeCheck, ShieldCheck } from "lucide-react";
 import LogoMark from "./LogoMark";
 
@@ -6,6 +7,19 @@ const AuthShell = ({ title, subtitle, children, footer }) => (
   <main className="flex flex-1 items-stretch justify-center bg-[#FAF6EF] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
     <div className="grid w-full max-w-5xl overflow-hidden rounded-[2rem] border border-[#E3D9C2] bg-white card-shadow lg:grid-cols-[0.95fr_1.05fr]">
       <aside className="relative hidden flex-col justify-between overflow-hidden bg-[#1C1917] p-9 text-[#FAF6EF] lg:flex">
+        <Image
+          src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=900&q=80"
+          alt=""
+          aria-hidden="true"
+          fill
+          loading="lazy"
+          sizes="450px"
+          className="object-cover opacity-25"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1C1917]/30 via-[#1C1917]/70 to-[#1C1917]"
+        />
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_80%_10%,rgb(194_65_12/0.35),transparent_60%)]"

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ChipRoot, ChipLabel, CardRoot, CardContent, AvatarRoot, AvatarFallback } from "@heroui/react";
 import {
   BadgeCheck,
@@ -55,6 +56,23 @@ const WhyOpenFund = () => {
 
         <div className="mt-12 grid gap-5 lg:grid-cols-6">
           <CardRoot className="overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow lg:col-span-4">
+            <div className="relative h-40 overflow-hidden bg-[#EDE6D6] sm:h-48">
+              <Image
+                src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1200&q=80"
+                alt="Community volunteers packing donation boxes together"
+                fill
+                loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 700px"
+                className="object-cover"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
+              />
+              <span className="absolute bottom-3 left-4 rounded-full bg-white/95 px-3 py-1 font-mono text-[11px] font-medium text-[#1C1917]">
+                Backed by neighbors, verified on-chain
+              </span>
+            </div>
             <CardContent className="flex h-full flex-col p-6 sm:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">

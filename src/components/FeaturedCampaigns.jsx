@@ -1,13 +1,17 @@
 import NextLink from "next/link";
+import Image from "next/image";
 import { ButtonRoot, ChipRoot, ChipLabel, CardRoot, CardContent, AvatarRoot, AvatarFallback } from "@heroui/react";
-import { ArrowRight, ArrowUpRight, Globe, Leaf, Monitor } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 const campaigns = [
   {
     title: "Solar Schools Initiative",
     description:
       "Rooftop solar for 12 underfunded schools — cutting energy costs and teaching kids the power of clean energy.",
-    icon: Globe,
+    // Photo: solar panel array (Unsplash)
+    image:
+      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=900&q=80",
+    alt: "Rows of solar panels under a blue sky",
     badge: "Energy",
     raised: "$86,400",
     goal: "$110,000",
@@ -22,7 +26,10 @@ const campaigns = [
     title: "Community Mushroom Farm",
     description:
       "A regenerative micro-farm turning vacant lots into food sources for the neighborhood.",
-    icon: Leaf,
+    // Photo: community garden beds (Unsplash)
+    image:
+      "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=80",
+    alt: "Volunteers tending lush community garden beds",
     badge: "Agriculture",
     raised: "$34,200",
     goal: "$45,000",
@@ -37,7 +44,10 @@ const campaigns = [
     title: "Open Source droneOS",
     description:
       "Flight-stack firmware anyone can audit, modify, and deploy on consumer-grade hardware.",
-    icon: Monitor,
+    // Photo: quadcopter drone in flight (Unsplash)
+    image:
+      "https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=900&q=80",
+    alt: "Quadcopter drone flying at sunset",
     badge: "Technology",
     raised: "$12,800",
     goal: "$20,000",
@@ -77,18 +87,24 @@ const FeaturedCampaigns = () => {
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {campaigns.map((c) => {
-            const Icon = c.icon;
             return (
               <CardRoot
                 key={c.title}
                 className="group flex flex-col overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow transition-all duration-300 hover:-translate-y-1.5 hover:lift-shadow"
               >
-                <div className={`relative flex h-44 items-center justify-center overflow-hidden bg-gradient-to-br ${c.tint}`}>
+                <div className={`relative h-44 overflow-hidden bg-gradient-to-br ${c.tint}`}>
+                  <Image
+                    src={c.image}
+                    alt={c.alt}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                   <div
                     aria-hidden="true"
-                    className="absolute inset-0 bg-[radial-gradient(55%_75%_at_70%_20%,rgb(255_255_255/0.2),transparent_60%)]"
+                    className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent"
                   />
-                  <Icon className="relative size-12 text-white/90 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.25} />
                   <ChipRoot className="absolute top-4 left-4 inline-flex rounded-full bg-white/95 px-3 py-1">
                     <ChipLabel className="text-[11px] font-semibold text-[#1C1917]">{c.badge}</ChipLabel>
                   </ChipRoot>

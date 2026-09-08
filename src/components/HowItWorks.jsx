@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ChipRoot, ChipLabel, CardRoot, CardContent } from "@heroui/react";
 import { Coins, Rocket, Users } from "lucide-react";
 
@@ -8,6 +9,9 @@ const steps = [
     title: "Create your campaign",
     description:
       "Set a goal, tell your story, and add reward tiers — live in minutes, no approval committee.",
+    image:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+    alt: "Creator planning a campaign at a laptop with notes",
   },
   {
     n: "02",
@@ -15,6 +19,9 @@ const steps = [
     title: "Rally your backers",
     description:
       "Share one link. Momentum is public, so every pledge pulls the next one in.",
+    image:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
+    alt: "Diverse group of backers celebrating together outdoors",
   },
   {
     n: "03",
@@ -22,6 +29,9 @@ const steps = [
     title: "Get funded & launch",
     description:
       "Hit your goal and payouts release on a verifiable trail, 5% flat, nothing hidden.",
+    image:
+      "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+    alt: "Team launching a project together in a workshop",
   },
 ];
 
@@ -54,17 +64,29 @@ const HowItWorks = () => {
             return (
               <CardRoot
                 key={step.n}
-                className="relative flex flex-col rounded-3xl border border-[#E3D9C2] bg-white p-7 card-shadow transition-all duration-300 hover:-translate-y-1"
+                className="relative flex flex-col overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow transition-all duration-300 hover:-translate-y-1"
               >
-                <CardContent className="flex flex-col p-0">
-                  <div className="flex items-center justify-between">
-                    <span className="flex size-12 items-center justify-center rounded-2xl bg-[#C2410C] text-white">
-                      <Icon className="size-5" strokeWidth={1.75} />
-                    </span>
-                    <span className="font-mono text-sm font-medium text-[#A8A29E]">
-                      {step.n}
-                    </span>
-                  </div>
+                <div className="relative h-36 overflow-hidden bg-[#EDE6D6]">
+                  <Image
+                    src={step.image}
+                    alt={step.alt}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className="object-cover"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"
+                  />
+                  <span className="absolute bottom-3 left-4 flex size-10 items-center justify-center rounded-xl bg-white/95 text-[#C2410C] shadow-sm">
+                    <Icon className="size-5" strokeWidth={1.75} />
+                  </span>
+                  <span className="absolute top-3 right-4 rounded-full bg-black/35 px-2.5 py-1 font-mono text-[11px] text-white backdrop-blur-md">
+                    {step.n}
+                  </span>
+                </div>
+                <CardContent className="flex flex-col p-7 pt-5">
                   <p className="mt-6 font-mono text-[11px] tracking-[0.16em] text-[#9A3412] uppercase">
                     Step {step.n}
                   </p>
