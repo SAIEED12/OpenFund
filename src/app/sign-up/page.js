@@ -1,9 +1,7 @@
 import NextLink from "next/link";
+import { ButtonRoot, FormRoot, TextFieldRoot, LabelRoot, InputRoot } from "@heroui/react";
 
 import AuthShell from "../../components/AuthShell";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export const metadata = {
   title: "Sign Up | OpenFund",
@@ -20,59 +18,59 @@ export default function SignUpPage() {
           Already have an account?{" "}
           <NextLink
             href="/sign-in"
-            className="font-semibold text-mint-deep underline-offset-4 hover:underline"
+            className="font-semibold text-[#9A3412] underline-offset-4 hover:underline"
           >
             Sign in
           </NextLink>
         </>
       }
     >
-      <form className="space-y-5">
-        <div className="grid gap-2">
-          <Label htmlFor="name">Full name</Label>
-          <Input
-            id="name"
+      <FormRoot className="space-y-5">
+        <TextFieldRoot name="name" isRequired className="grid gap-2">
+          <LabelRoot className="text-sm font-medium">Full name</LabelRoot>
+          <InputRoot
             name="name"
             type="text"
             placeholder="Jordan Doe"
             autoComplete="name"
-            required
+            className="h-11 w-full rounded-xl border border-[#D9CDB2] bg-white px-4 text-[15px] outline-none placeholder:text-[#A8A29E] hover:border-[#C2410C]/60 focus:border-[#C2410C]"
           />
-        </div>
+        </TextFieldRoot>
 
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
+        <TextFieldRoot name="email" type="email" isRequired className="grid gap-2">
+          <LabelRoot className="text-sm font-medium">Email</LabelRoot>
+          <InputRoot
             name="email"
             type="email"
             placeholder="you@example.com"
             autoComplete="email"
-            required
+            className="h-11 w-full rounded-xl border border-[#D9CDB2] bg-white px-4 text-[15px] outline-none placeholder:text-[#A8A29E] hover:border-[#C2410C]/60 focus:border-[#C2410C]"
           />
-        </div>
+        </TextFieldRoot>
 
-        <div className="grid gap-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
+        <TextFieldRoot name="password" type="password" isRequired minLength={8} className="grid gap-2">
+          <LabelRoot className="text-sm font-medium">Password</LabelRoot>
+          <InputRoot
             name="password"
             type="password"
             placeholder="At least 8 characters"
             autoComplete="new-password"
             minLength={8}
-            required
+            className="h-11 w-full rounded-xl border border-[#D9CDB2] bg-white px-4 text-[15px] outline-none placeholder:text-[#A8A29E] hover:border-[#C2410C]/60 focus:border-[#C2410C]"
           />
-        </div>
+        </TextFieldRoot>
 
-        <Button type="submit" size="lg" className="h-12 w-full rounded-full bg-ink text-[15px] font-semibold text-paper hover:bg-pine">
+        <ButtonRoot
+          type="submit"
+          className="flex h-12 w-full items-center justify-center rounded-full bg-[#C2410C] text-[15px] font-semibold text-white transition-colors hover:bg-[#9A3412]"
+        >
           Create account
-        </Button>
+        </ButtonRoot>
 
-        <p className="text-center text-xs leading-relaxed text-muted-foreground">
+        <p className="text-center text-xs leading-relaxed text-[#78716C]">
           By continuing you agree to the Terms. Payouts are verified on the public ledger.
         </p>
-      </form>
+      </FormRoot>
     </AuthShell>
   );
 }

@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import { ChipRoot, ChipLabel } from "@heroui/react";
 import LogoMark from "./LogoMark";
 
 const columns = [
@@ -29,7 +30,7 @@ const columns = [
 ];
 
 const Footer = () => (
-  <footer className="ink-panel text-[#F6F8F5]">
+  <footer className="border-t border-[#E3D9C2] bg-[#1C1917] text-[#FAF6EF]">
     <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
       <div className="grid gap-10 lg:grid-cols-[1.2fr_2fr]">
         <div>
@@ -43,10 +44,10 @@ const Footer = () => (
             Community crowdfunding with a public ledger. Every pledge traced
             from checkout to delivery.
           </p>
-          <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 font-mono text-xs text-white/70">
-            <span className="size-2 rounded-full bg-[#C9A86A] animate-pulse-dot" />
-            $2.4M routed · ledger live
-          </p>
+          <ChipRoot className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5">
+            <span className="size-2 rounded-full bg-[#A3C26A] animate-pulse-dot" />
+            <ChipLabel className="font-mono text-xs text-white/70">$2.4M routed · ledger live</ChipLabel>
+          </ChipRoot>
         </div>
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
           {columns.map((col) => (
@@ -59,7 +60,7 @@ const Footer = () => (
                   <li key={link.label}>
                     <NextLink
                       href={link.href}
-                      className="text-sm text-white/75 transition-colors hover:text-[#3DDC97]"
+                      className="text-sm text-white/75 transition-colors hover:text-[#E7A87B]"
                     >
                       {link.label}
                     </NextLink>

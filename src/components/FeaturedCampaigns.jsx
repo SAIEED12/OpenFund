@@ -1,9 +1,6 @@
 import NextLink from "next/link";
+import { ButtonRoot, ChipRoot, ChipLabel, CardRoot, CardContent, AvatarRoot, AvatarFallback } from "@heroui/react";
 import { ArrowRight, ArrowUpRight, Globe, Leaf, Monitor } from "lucide-react";
-
-import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 const campaigns = [
   {
@@ -19,8 +16,7 @@ const campaigns = [
     avatarInitials: ["AL", "MK", "RS"],
     extraBackers: 409,
     daysLeft: "5 days left",
-    tint: "from-[#14342B] to-[#0B1210]",
-    accent: "text-[#3DDC97]",
+    tint: "from-[#C2410C] to-[#7C2D12]",
   },
   {
     title: "Community Mushroom Farm",
@@ -35,8 +31,7 @@ const campaigns = [
     avatarInitials: ["TM", "JB"],
     extraBackers: 185,
     daysLeft: "12 days left",
-    tint: "from-[#1d3a2a] to-[#0e241b]",
-    accent: "text-[#3DDC97]",
+    tint: "from-[#4D7C0F] to-[#365314]",
   },
   {
     title: "Open Source droneOS",
@@ -51,107 +46,99 @@ const campaigns = [
     avatarInitials: ["KP", "LW", "NR"],
     extraBackers: 90,
     daysLeft: "21 days left",
-    tint: "from-[#1c2b33] to-[#0b1210]",
-    accent: "text-[#C9A86A]",
+    tint: "from-[#78350F] to-[#1C1917]",
   },
 ];
 
 const FeaturedCampaigns = () => {
   return (
-    <section className="relative overflow-hidden bg-background py-20 sm:py-24">
+    <section className="relative overflow-hidden bg-[#FAF6EF] py-20 sm:py-24">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-xl">
-            <Badge variant="outline" className="rounded-full border-border bg-card px-3 py-1 font-mono text-[11px] tracking-[0.14em] text-mint-deep uppercase">
-              Trending now
-            </Badge>
+            <ChipRoot className="inline-flex rounded-full border border-[#E3D9C2] bg-white px-3 py-1">
+              <ChipLabel className="font-mono text-[11px] tracking-[0.14em] text-[#9A3412] uppercase">Trending now</ChipLabel>
+            </ChipRoot>
             <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
               Campaigns gaining momentum
             </h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+            <p className="mt-3 text-[15px] leading-relaxed text-[#78716C]">
               The community is backing these right now. Every pledge is public
               — momentum you can verify.
             </p>
           </div>
-          <Button asChild variant="outline" className="hidden gap-2 rounded-full sm:inline-flex">
-            <NextLink href="/campaigns">
+          <ButtonRoot className="hidden items-center gap-2 rounded-full border border-[#E3D9C2] bg-white px-5 py-2.5 text-sm font-medium transition-colors hover:bg-[#EDE6D6] sm:inline-flex">
+            <NextLink href="/campaigns" className="flex items-center gap-2">
               View All Campaigns
               <ArrowRight className="size-4" />
             </NextLink>
-          </Button>
+          </ButtonRoot>
         </div>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {campaigns.map((c) => {
             const Icon = c.icon;
             return (
-              <article
+              <CardRoot
                 key={c.title}
-                className="group relative flex flex-col overflow-hidden rounded-3xl border border-border bg-card card-shadow transition-all duration-300 hover:-translate-y-1.5 hover:lift-shadow"
+                className="group flex flex-col overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow transition-all duration-300 hover:-translate-y-1.5 hover:lift-shadow"
               >
                 <div className={`relative flex h-44 items-center justify-center overflow-hidden bg-gradient-to-br ${c.tint}`}>
                   <div
                     aria-hidden="true"
-                    className="absolute inset-0 bg-[radial-gradient(55%_75%_at_70%_20%,rgb(61_220_151/0.18),transparent_60%)]"
+                    className="absolute inset-0 bg-[radial-gradient(55%_75%_at_70%_20%,rgb(255_255_255/0.2),transparent_60%)]"
                   />
-                  <Icon className="relative size-13 text-white/90 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.25} />
-                  <Badge className="absolute top-4 left-4 rounded-full border-0 bg-white/95 px-3 py-1 text-[11px] font-semibold text-ink">
-                    {c.badge}
-                  </Badge>
-                  <span className="absolute top-4 right-4 rounded-full border border-white/20 bg-black/35 px-2.5 py-1 font-mono text-[11px] text-white/85 backdrop-blur-md">
+                  <Icon className="relative size-12 text-white/90 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.25} />
+                  <ChipRoot className="absolute top-4 left-4 inline-flex rounded-full bg-white/95 px-3 py-1">
+                    <ChipLabel className="text-[11px] font-semibold text-[#1C1917]">{c.badge}</ChipLabel>
+                  </ChipRoot>
+                  <span className="absolute top-4 right-4 rounded-full bg-black/35 px-2.5 py-1 font-mono text-[11px] text-white backdrop-blur-md">
                     {c.daysLeft}
                   </span>
                 </div>
 
-                <div className="flex flex-1 flex-col p-6">
+                <CardContent className="flex flex-1 flex-col p-6">
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="text-[17px] font-semibold tracking-tight">{c.title}</h3>
-                    <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-mint-deep" />
+                    <ArrowUpRight className="size-4 shrink-0 text-[#A8A29E] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#C2410C]" />
                   </div>
-                  <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted-foreground text-pretty">
+                  <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-[#78716C] text-pretty">
                     {c.description}
                   </p>
 
-                  <div className="mt-5">
-                    <div className="h-1.5 overflow-hidden rounded-full bg-secondary">
+                  <div className="mt-5" role="progressbar" aria-valuenow={c.percent} aria-valuemin={0} aria-valuemax={100} aria-label={`${c.title} funding progress`}>
+                    <div className="h-1.5 overflow-hidden rounded-full bg-[#EDE6D6]">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-mint-deep to-mint transition-all"
+                        className="h-full rounded-full bg-[#C2410C] transition-all"
                         style={{ width: `${c.percent}%` }}
                       />
                     </div>
                     <div className="mt-2.5 flex items-center justify-between text-xs">
-                      <span className="font-mono text-[13px] font-semibold text-foreground">{c.raised}</span>
-                      <span className="text-muted-foreground">of {c.goal} · {c.percent}%</span>
+                      <span className="font-mono text-[13px] font-semibold">{c.raised}</span>
+                      <span className="text-[#78716C]">of {c.goal} · {c.percent}%</span>
                     </div>
                   </div>
 
-                  <div className="mt-5 flex items-center gap-3 border-t border-border pt-4">
-                    <AvatarGroup>
+                  <div className="mt-5 flex items-center gap-3 border-t border-[#EDE6D6] pt-4">
+                    <div className="flex -space-x-2">
                       {c.avatarInitials.map((initials) => (
-                        <Avatar key={initials}>
-                          <AvatarFallback className="text-[11px]">{initials}</AvatarFallback>
-                        </Avatar>
+                        <AvatarRoot key={initials} className="size-7 border-2 border-white bg-[#EDE6D6]">
+                          <AvatarFallback className="bg-[#EDE6D6] text-[10px] text-[#1C1917]">{initials}</AvatarFallback>
+                        </AvatarRoot>
                       ))}
-                      <AvatarGroupCount>+{c.extraBackers}</AvatarGroupCount>
-                    </AvatarGroup>
-                    <p className="text-xs text-muted-foreground">
-                      <span className="font-semibold text-foreground">{c.backers.toLocaleString()} backers</span>
+                      <span className="flex size-7 items-center justify-center rounded-full border-2 border-white bg-[#1C1917] font-mono text-[9px] text-white">
+                        +{c.extraBackers}
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#78716C]">
+                      <span className="font-semibold text-[#1C1917]">{c.backers.toLocaleString()} backers</span>
                       {" "}· verified
                     </p>
                   </div>
-                </div>
-              </article>
+                </CardContent>
+              </CardRoot>
             );
           })}
-        </div>
-
-        <div className="mt-10 flex justify-center sm:hidden">
-          <Button asChild variant="outline" size="lg" className="gap-2 rounded-full px-6">
-            <NextLink href="/campaigns">
-              View All Campaigns
-              <ArrowRight className="size-4" />
-            </NextLink>
-          </Button>
         </div>
       </div>
     </section>
