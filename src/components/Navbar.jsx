@@ -3,9 +3,12 @@
 import { useState } from "react";
 import NextLink from "next/link";
 import { ButtonRoot, ChipRoot, ChipLabel, AvatarRoot, AvatarFallback } from "@heroui/react";
-import { Coins, Heart, LayoutDashboard, LogOut, Menu, Rocket, User, X } from "lucide-react";
+import { CodeXml, Coins, Heart, LayoutDashboard, LogOut, Menu, Rocket, User, X } from "lucide-react";
 
 import LogoMark from "./LogoMark";
+
+// TODO: replace with client GitHub repository URL
+const DEVELOPER_URL = "#";
 
 const navLinks = [
   { label: "Explore", href: "/campaigns" },
@@ -48,6 +51,16 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           {isLoggedIn ? (
             <div className="relative flex items-center gap-2">
+              <a
+                href={DEVELOPER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Join as Developer on GitHub"
+                className="hidden items-center gap-2 rounded-full border border-[#E3D9C2] bg-white px-4 py-2 text-sm font-semibold text-[#1C1917] transition-colors hover:bg-[#EDE6D6] lg:inline-flex"
+              >
+                <CodeXml className="size-4" />
+                Join as Developer
+              </a>
               <ChipRoot className="hidden items-center gap-1.5 rounded-full border border-[#E3D9C2] bg-[#EDE6D6] px-3 py-1.5 sm:inline-flex">
                 <Coins className="size-3.5 text-[#4D7C0F]" />
                 <ChipLabel className="font-mono text-xs text-[#1C1917]">250 credits</ChipLabel>
@@ -103,6 +116,16 @@ const Navbar = () => {
               >
                 Sign In
               </NextLink>
+              <a
+                href={DEVELOPER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Join as Developer on GitHub"
+                className="hidden items-center gap-2 rounded-full border border-[#E3D9C2] bg-white px-4 py-2 text-sm font-semibold text-[#1C1917] transition-colors hover:bg-[#EDE6D6] lg:inline-flex"
+              >
+                <CodeXml className="size-4" />
+                Join as Developer
+              </a>
               <ButtonRoot className="hidden items-center gap-2 rounded-full bg-[#C2410C] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#9A3412] sm:inline-flex">
                 <NextLink href="/start" className="flex items-center gap-2">
                   <Rocket className="size-4" />
@@ -137,8 +160,8 @@ const Navbar = () => {
                 </NextLink>
               ))}
             </nav>
-            {!isLoggedIn && (
-              <div className="space-y-2 border-t border-[#E3D9C2] pt-4">
+            <div className="space-y-2 border-t border-[#E3D9C2] pt-4">
+              {!isLoggedIn && (
                 <NextLink
                   href="/sign-in"
                   onClick={() => setMenuOpen(false)}
@@ -146,6 +169,19 @@ const Navbar = () => {
                 >
                   Sign In
                 </NextLink>
+              )}
+              <a
+                href={DEVELOPER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Join as Developer on GitHub"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center justify-center gap-2 rounded-full border border-[#E3D9C2] bg-white px-4 py-2.5 text-center text-sm font-semibold text-[#1C1917]"
+              >
+                <CodeXml className="size-4" />
+                Join as Developer
+              </a>
+              {!isLoggedIn && (
                 <NextLink
                   href="/start"
                   onClick={() => setMenuOpen(false)}
@@ -154,8 +190,8 @@ const Navbar = () => {
                   <Rocket className="size-4" />
                   Start a Campaign
                 </NextLink>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       )}
