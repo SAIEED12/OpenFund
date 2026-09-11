@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ButtonRoot, ChipRoot, ChipLabel, AvatarRoot, AvatarFallback } from "@heroui/react";
 import { CodeXml, Coins, Heart, LayoutDashboard, LogOut, Menu, Rocket, User, X } from "lucide-react";
 
@@ -19,12 +20,22 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const reduce = useReducedMotion();
 
   const handleSignOut = () => {
     setIsLoggedIn(false);
     setMenuOpen(false);
     setAccountOpen(false);
   };
+
+  useEffect(() => {
+    if (!accountOpen) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setAccountOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [accountOpen]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E3D9C2] bg-[#FAF6EF]/90 backdrop-blur-xl">
@@ -74,8 +85,16 @@ const Navbar = () => {
                   <AvatarFallback className="bg-[#C2410C] text-xs text-white">JD</AvatarFallback>
                 </AvatarRoot>
               </ButtonRoot>
-              {accountOpen && (
-                <div className="absolute top-12 right-0 w-60 overflow-hidden rounded-2xl border border-[#E3D9C2] bg-white shadow-xl">
+              <AnimatePresence>
+                {accountOpen && (
+                  <motion.div
+                    initial={reduce ? false : { opacity: 0, scale: 0.96, y: -6 }}
+                    animate={reduce ? undefined : { opacity: 1, scale: 1, y: 0 }}
+                    exit={reduce ? undefined : { opacity: 0, scale: 0.96, y: -6 }}
+                    transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ transformOrigin: "top right" }}
+                    className="absolute top-12 right-0 w-60 overflow-hidden rounded-2xl border border-[#E3D9C2] bg-white shadow-xl"
+                  >
                   <div className="border-b border-[#EDE6D6] px-4 py-3">
                     <p className="text-sm font-medium text-[#1C1917]">Jordan Doe</p>
                     <p className="truncate text-xs text-[#78716C]">jordan@openfund.io</p>
@@ -105,8 +124,9 @@ const Navbar = () => {
                       Sign out
                     </button>
                   </nav>
-                </div>
-              )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ) : (
             <>
@@ -145,8 +165,15 @@ const Navbar = () => {
         </div>
       </div>
 
-      {menuOpen && (
-        <div className="border-t border-[#E3D9C2] bg-[#FAF6EF] md:hidden">
+      <AnimatePresence initial={false}>
+        {menuOpen && (
+          <motion.div
+            initial={reduce ? false : { height: 0, opacity: 0 }}
+            animate={reduce ? undefined : { height: "auto", opacity: 1 }}
+            exit={reduce ? undefined : { height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden border-t border-[#E3D9C2] bg-[#FAF6EF] md:hidden"
+          >
           <div className="mx-auto w-full max-w-7xl space-y-1 px-4 py-4 sm:px-6">
             <nav className="flex flex-col" aria-label="Mobile navigation">
               {navLinks.map((link) => (
@@ -193,8 +220,9 @@ const Navbar = () => {
               )}
             </div>
           </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

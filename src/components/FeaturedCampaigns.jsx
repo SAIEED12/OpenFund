@@ -1,7 +1,10 @@
+"use client";
+
 import NextLink from "next/link";
 import Image from "next/image";
 import { ButtonRoot, ChipRoot, ChipLabel, CardRoot, CardContent, AvatarRoot, AvatarFallback } from "@heroui/react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { Reveal, Stagger, Item } from "./MotionReveal";
 
 const campaigns = [
   {
@@ -64,34 +67,36 @@ const FeaturedCampaigns = () => {
   return (
     <section className="relative overflow-hidden bg-[#FAF6EF] py-20 sm:py-24">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-xl">
-            <ChipRoot className="inline-flex rounded-full border border-[#E3D9C2] bg-white px-3 py-1">
-              <ChipLabel className="font-mono text-[11px] tracking-[0.14em] text-[#9A3412] uppercase">Trending now</ChipLabel>
-            </ChipRoot>
-            <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Campaigns gaining momentum
-            </h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-[#78716C]">
-              The community is backing these right now. Every pledge is public
-              — momentum you can verify.
-            </p>
+        <Reveal>
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-xl">
+              <ChipRoot className="inline-flex rounded-full border border-[#E3D9C2] bg-white px-3 py-1">
+                <ChipLabel className="font-mono text-[11px] tracking-[0.14em] text-[#9A3412] uppercase">Trending now</ChipLabel>
+              </ChipRoot>
+              <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+                Campaigns gaining momentum
+              </h2>
+              <p className="mt-3 text-[15px] leading-relaxed text-[#78716C]">
+                The community is backing these right now. Every pledge is public
+                — momentum you can verify.
+              </p>
+            </div>
+            <ButtonRoot className="hidden items-center gap-2 rounded-full border border-[#E3D9C2] bg-white px-5 py-2.5 text-sm font-medium transition-colors hover:bg-[#EDE6D6] sm:inline-flex">
+              <NextLink href="/campaigns" className="flex items-center gap-2">
+                View All Campaigns
+                <ArrowRight className="size-4" />
+              </NextLink>
+            </ButtonRoot>
           </div>
-          <ButtonRoot className="hidden items-center gap-2 rounded-full border border-[#E3D9C2] bg-white px-5 py-2.5 text-sm font-medium transition-colors hover:bg-[#EDE6D6] sm:inline-flex">
-            <NextLink href="/campaigns" className="flex items-center gap-2">
-              View All Campaigns
-              <ArrowRight className="size-4" />
-            </NextLink>
-          </ButtonRoot>
-        </div>
+        </Reveal>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {campaigns.map((c) => {
             return (
-              <CardRoot
-                key={c.title}
-                className="group flex flex-col overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow transition-all duration-300 hover:-translate-y-1.5 hover:lift-shadow"
-              >
+              <Item key={c.title} className="h-full">
+                <CardRoot
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow transition-shadow duration-300 hover:lift-shadow"
+                >
                 <div className={`relative h-44 overflow-hidden bg-gradient-to-br ${c.tint}`}>
                   <Image
                     src={c.image}
@@ -152,10 +157,11 @@ const FeaturedCampaigns = () => {
                     </p>
                   </div>
                 </CardContent>
-              </CardRoot>
+                </CardRoot>
+              </Item>
             );
           })}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

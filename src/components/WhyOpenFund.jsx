@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "motion/react";
 import { ChipRoot, ChipLabel, CardRoot, CardContent, AvatarRoot, AvatarFallback } from "@heroui/react";
 import {
   BadgeCheck,
@@ -8,6 +11,7 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { Reveal, Stagger, Item } from "./MotionReveal";
 
 const pledges = [
   { initials: "AL", name: "Ayesha", project: "Solar Schools", amount: "$1,250", hash: "0x8f3a…c21d" },
@@ -41,7 +45,7 @@ const WhyOpenFund = () => {
   return (
     <section className="relative overflow-hidden bg-[#FAF6EF] py-20 sm:py-24">
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+        <Reveal className="mx-auto flex max-w-2xl flex-col items-center text-center">
           <ChipRoot className="inline-flex items-center gap-1.5 rounded-full border border-[#E3D9C2] bg-white px-3 py-1">
             <ShieldCheck className="size-3 text-[#C2410C]" />
             <ChipLabel className="text-xs text-[#1C1917]">Why OpenFund</ChipLabel>
@@ -52,10 +56,11 @@ const WhyOpenFund = () => {
           <p className="mt-3 text-[15px] leading-relaxed text-[#78716C]">
             Cheap to run, visible by default, open by design — for creators and backers alike.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-12 grid gap-5 lg:grid-cols-6">
-          <CardRoot className="overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow lg:col-span-4">
+          <Reveal className="lg:col-span-4" y={32}>
+            <CardRoot className="overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow">
             <div className="relative h-40 overflow-hidden bg-[#EDE6D6] sm:h-48">
               <Image
                 src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1200&q=80"
@@ -92,67 +97,86 @@ const WhyOpenFund = () => {
                 </span>
               </div>
 
-              <ul className="mt-6 divide-y divide-[#EDE6D6] rounded-2xl border border-[#EDE6D6] bg-[#FAF6EF]">
+              <Stagger
+                className="mt-6 divide-y divide-[#EDE6D6] rounded-2xl border border-[#EDE6D6] bg-[#FAF6EF]"
+                stagger={0.07}
+              >
                 {pledges.map((pledge) => (
-                  <li key={pledge.initials} className="flex items-center gap-3 px-4 py-3">
-                    <AvatarRoot className="size-9 bg-[#EDE6D6]">
-                      <AvatarFallback className="bg-[#EDE6D6] text-xs text-[#1C1917]">{pledge.initials}</AvatarFallback>
-                    </AvatarRoot>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium">{pledge.name} <span className="font-normal text-[#78716C]">→ {pledge.project}</span></p>
-                      <p className="truncate font-mono text-[11px] text-[#A8A29E]">{pledge.hash}</p>
+                  <Item key={pledge.initials} y={12}>
+                    <div className="flex items-center gap-3 px-4 py-3">
+                      <AvatarRoot className="size-9 bg-[#EDE6D6]">
+                        <AvatarFallback className="bg-[#EDE6D6] text-xs text-[#1C1917]">{pledge.initials}</AvatarFallback>
+                      </AvatarRoot>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium">{pledge.name} <span className="font-normal text-[#78716C]">→ {pledge.project}</span></p>
+                        <p className="truncate font-mono text-[11px] text-[#A8A29E]">{pledge.hash}</p>
+                      </div>
+                      <span className="font-mono text-sm font-semibold">{pledge.amount}</span>
+                      <BadgeCheck className="size-4 shrink-0 text-[#4D7C0F]" aria-label="Verified" />
                     </div>
-                    <span className="font-mono text-sm font-semibold">{pledge.amount}</span>
-                    <BadgeCheck className="size-4 shrink-0 text-[#4D7C0F]" aria-label="Verified" />
-                  </li>
+                  </Item>
                 ))}
-              </ul>
+              </Stagger>
 
               <p className="mt-4 font-mono text-[11px] tracking-wide text-[#A8A29E] uppercase">
                 Public ledger · traced from pledge to delivery
               </p>
             </CardContent>
-          </CardRoot>
+            </CardRoot>
+          </Reveal>
 
-          <CardRoot className="flex flex-col rounded-3xl border-0 bg-[#C2410C] p-6 text-white sm:p-8 lg:col-span-2">
-            <CardContent className="flex h-full flex-col justify-between p-0">
-              <div>
-                <span className="flex size-11 items-center justify-center rounded-2xl bg-white/15">
-                  <Percent className="size-5" strokeWidth={2} />
-                </span>
-                <h3 className="font-display mt-4 text-lg font-semibold tracking-tight">Near-zero fees</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-white/80 text-pretty">
-                  One flat rate covers processing, payouts, and the platform itself.
-                </p>
-              </div>
-              <div className="mt-8">
-                <p className="font-display text-6xl font-semibold tracking-tight">5%</p>
-                <p className="mt-1 font-mono text-xs tracking-wide uppercase opacity-70">
-                  flat · no hidden charges
-                </p>
-              </div>
-            </CardContent>
-          </CardRoot>
-
-          {values.map((value) => {
-            const Icon = value.icon;
-            return (
-              <CardRoot
-                key={value.title}
-                className="flex flex-col rounded-3xl border border-[#E3D9C2] bg-white card-shadow lg:col-span-2"
-              >
-                <CardContent className="flex h-full flex-col p-6 sm:p-7">
-                  <span className="flex size-11 items-center justify-center rounded-2xl bg-[#EDE6D6]">
-                    <Icon className="size-5 text-[#9A3412]" strokeWidth={1.75} />
+          <Reveal className="lg:col-span-2" delay={0.1} y={32}>
+            <CardRoot className="flex h-full flex-col rounded-3xl border-0 bg-[#C2410C] p-6 text-white sm:p-8">
+              <CardContent className="flex h-full flex-col justify-between p-0">
+                <div>
+                  <span className="flex size-11 items-center justify-center rounded-2xl bg-white/15">
+                    <Percent className="size-5" strokeWidth={2} />
                   </span>
-                  <h3 className="font-display mt-4 text-lg font-semibold tracking-tight">{value.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-[#78716C] text-pretty">
-                    {value.description}
+                  <h3 className="font-display mt-4 text-lg font-semibold tracking-tight">Near-zero fees</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-white/80 text-pretty">
+                    One flat rate covers processing, payouts, and the platform itself.
                   </p>
-                </CardContent>
-              </CardRoot>
-            );
-          })}
+                </div>
+                <div className="mt-8">
+                  <motion.p
+                    className="font-display text-6xl font-semibold tracking-tight"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    5%
+                  </motion.p>
+                  <p className="mt-1 font-mono text-xs tracking-wide uppercase opacity-70">
+                    flat · no hidden charges
+                  </p>
+                </div>
+              </CardContent>
+            </CardRoot>
+          </Reveal>
+
+          <Stagger className="contents" stagger={0.1}>
+            {values.map((value) => {
+              const Icon = value.icon;
+              return (
+                <Item key={value.title} className="lg:col-span-2">
+                  <CardRoot
+                    className="flex h-full flex-col rounded-3xl border border-[#E3D9C2] bg-white card-shadow"
+                  >
+                    <CardContent className="flex h-full flex-col p-6 sm:p-7">
+                      <span className="flex size-11 items-center justify-center rounded-2xl bg-[#EDE6D6]">
+                        <Icon className="size-5 text-[#9A3412]" strokeWidth={1.75} />
+                      </span>
+                      <h3 className="font-display mt-4 text-lg font-semibold tracking-tight">{value.title}</h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-[#78716C] text-pretty">
+                        {value.description}
+                      </p>
+                    </CardContent>
+                  </CardRoot>
+                </Item>
+              );
+            })}
+          </Stagger>
         </div>
       </div>
     </section>
