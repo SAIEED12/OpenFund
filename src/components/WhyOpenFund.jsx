@@ -154,30 +154,30 @@ const WhyOpenFund = () => {
               </CardContent>
             </CardRoot>
           </Reveal>
-
-          <Stagger className="contents" stagger={0.1}>
-            {values.map((value) => {
-              const Icon = value.icon;
-              return (
-                <Item key={value.title} className="lg:col-span-2">
-                  <CardRoot
-                    className="flex h-full flex-col rounded-3xl border border-[#E3D9C2] bg-white card-shadow"
-                  >
-                    <CardContent className="flex h-full flex-col p-6 sm:p-7">
-                      <span className="flex size-11 items-center justify-center rounded-2xl bg-[#EDE6D6]">
-                        <Icon className="size-5 text-[#9A3412]" strokeWidth={1.75} />
-                      </span>
-                      <h3 className="font-display mt-4 text-lg font-semibold tracking-tight">{value.title}</h3>
-                      <p className="mt-1.5 text-sm leading-relaxed text-[#78716C] text-pretty">
-                        {value.description}
-                      </p>
-                    </CardContent>
-                  </CardRoot>
-                </Item>
-              );
-            })}
-          </Stagger>
         </div>
+
+        <Stagger className="mt-5 grid gap-5 lg:grid-cols-6" stagger={0.1}>
+          {values.map((value) => {
+            const Icon = value.icon;
+            return (
+              <Item key={value.title} className="lg:col-span-2">
+                <CardRoot
+                  className="flex h-full flex-col rounded-3xl border border-[#E3D9C2] bg-white card-shadow"
+                >
+                  <CardContent className="flex h-full flex-col p-6 sm:p-7">
+                    <span className="flex size-11 items-center justify-center rounded-2xl bg-[#EDE6D6]">
+                      <Icon className="size-5 text-[#9A3412]" strokeWidth={1.75} />
+                    </span>
+                    <h3 className="font-display mt-4 text-lg font-semibold tracking-tight">{value.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-[#78716C] text-pretty">
+                      {value.description}
+                    </p>
+                  </CardContent>
+                </CardRoot>
+              </Item>
+            );
+          })}
+        </Stagger>
       </div>
     </section>
   );

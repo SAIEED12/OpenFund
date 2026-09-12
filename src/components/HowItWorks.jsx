@@ -59,7 +59,7 @@ const HowItWorks = () => {
           </div>
         </Reveal>
 
-        <div className="relative mt-12 grid gap-5 md:grid-cols-3">
+        <div className="relative mt-12">
           <motion.div
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-12 top-16 hidden h-px bg-[#1C1917]/10 md:block"
@@ -70,7 +70,7 @@ const HowItWorks = () => {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           />
 
-          <Stagger className="contents">
+          <Stagger className="grid gap-5 md:grid-cols-3">
             {steps.map((step) => {
               const Icon = step.icon;
               return (
