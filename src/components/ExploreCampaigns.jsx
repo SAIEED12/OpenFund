@@ -256,7 +256,7 @@ const ExploreCampaigns = () => {
                 <button
                   key={cat}
                   onClick={() => setCategory(cat)}
-                  className={`inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                  className={`inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors cursor-pointer ${
                     category === cat
                       ? "bg-[#C2410C] text-white"
                       : "border border-[#E3D9C2] bg-white text-[#78716C] hover:bg-[#EDE6D6]"
@@ -304,7 +304,7 @@ const ExploreCampaigns = () => {
                 <Item key={c.title} className="h-full">
                   <CardRoot className="group flex h-full flex-col overflow-hidden rounded-3xl border border-[#E3D9C2] bg-white card-shadow transition-shadow duration-300 hover:lift-shadow">
                     <div
-                      className={`relative h-44 overflow-hidden bg-gradient-to-br ${c.tint}`}
+                      className={`relative h-44 overflow-hidden bg-linear-to-br ${c.tint}`}
                     >
                       <Image
                         src={c.image}
@@ -316,7 +316,7 @@ const ExploreCampaigns = () => {
                       />
                       <div
                         aria-hidden="true"
-                        className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent"
+                        className="absolute inset-0 bg-linear-to-t from-black/45 via-black/5 to-transparent"
                       />
                       <ChipRoot className="absolute top-4 left-4 inline-flex rounded-full bg-white/95 px-3 py-1">
                         <ChipLabel className="text-[11px] font-semibold text-[#1C1917]">

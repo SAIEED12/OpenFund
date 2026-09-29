@@ -39,7 +39,7 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E3D9C2] bg-[#FAF6EF]/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-[68px] w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-17 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <NextLink href="/" className="flex shrink-0 items-center gap-2.5" aria-label="OpenFund home">
           <LogoMark />
           <span className="font-display text-[19px] font-semibold tracking-tight text-[#1C1917]">
