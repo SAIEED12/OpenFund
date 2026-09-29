@@ -1,5 +1,4 @@
 import NextLink from "next/link";
-import { ChipRoot, ChipLabel } from "@heroui/react";
 import LogoMark from "./LogoMark";
 
 const columns = [
@@ -7,7 +6,7 @@ const columns = [
     title: "Explore",
     links: [
       { label: "All campaigns", href: "/campaigns" },
-      { label: "Trending", href: "/campaigns" },
+      { label: "Featured", href: "/campaigns" },
       { label: "How it works", href: "/how-it-works" },
     ],
   },
@@ -44,10 +43,6 @@ const Footer = () => (
             Community crowdfunding with a public ledger. Every pledge traced
             from checkout to delivery.
           </p>
-          <ChipRoot className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5">
-            <span className="size-2 rounded-full bg-[#A3C26A] animate-pulse-dot" />
-            <ChipLabel className="font-mono text-xs text-white/70">$2.4M routed · ledger live</ChipLabel>
-          </ChipRoot>
         </div>
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
           {columns.map((col) => (
@@ -73,7 +68,6 @@ const Footer = () => (
       </div>
       <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 OpenFund. Built for the commons.</p>
-        <p className="font-mono">5% flat · no hidden charges · verified payouts</p>
       </div>
     </div>
   </footer>
