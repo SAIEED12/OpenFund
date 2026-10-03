@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import AuthShell from "./AuthShell";
 import LogoMark from "./LogoMark";
+import { authClient } from "@/lib/auth-client";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -86,7 +87,7 @@ function SignUpAside({ role }) {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1C1917]/30 via-[#1C1917]/70 to-[#1C1917]"
+        className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#1C1917]/30 via-[#1C1917]/70 to-[#1C1917]"
       />
       <div
         aria-hidden="true"
@@ -165,6 +166,21 @@ export default function SignUpVisual() {
     show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
   };
 
+  const onSubmit = async (e) =>{
+    e.preventDefault();
+    const formData = new FormData(e.target)
+    const userData = Object.fromEntries(formData.entries())
+
+    const {data, error} = await authClient.signUp.email({
+      name: userData.name,
+      email: userData.email,
+      password: userData.password,
+      role: role,
+      callbackUrl: "/",
+    })
+    console.log("Sign up response:", {data, error})
+  }
+
   return (
     <AuthShell
       eyebrow="Join 8,204 verified backers"
@@ -224,7 +240,7 @@ export default function SignUpVisual() {
                   onClick={() => setRole(r.id)}
                   className={`relative rounded-2xl border p-4 text-left transition-all outline-none focus-visible:ring-2 focus-visible:ring-[#C2410C] active:scale-[0.98] ${
                     selected
-                      ? "border-[#C2410C] bg-[#C2410C]/[0.06] shadow-[0_8px_24px_-12px_rgb(194_65_12/0.45)]"
+                      ? "border-[#C2410C] bg-[#C2410C]/6 shadow-[0_8px_24px_-12px_rgb(194_65_12/0.45)]"
                       : "border-[#E3D9C2] bg-white hover:border-[#C2410C]/50 hover:bg-[#FAF6EF]"
                   }`}
                 >
@@ -291,7 +307,7 @@ export default function SignUpVisual() {
           </div>
         </motion.div>
 
-        <FormRoot className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <FormRoot className="space-y-4" onSubmit={onSubmit}>
           <motion.div variants={reduce ? undefined : item}>
             <TextFieldRoot name="name" isRequired className="grid gap-2">
               <LabelRoot className="text-sm font-medium">Full name</LabelRoot>
