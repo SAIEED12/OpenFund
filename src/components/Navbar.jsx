@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ButtonRoot, ChipRoot, ChipLabel, AvatarRoot, AvatarFallback } from "@heroui/react";
 import { CodeXml, Coins, Heart, LayoutDashboard, LogOut, Menu, Rocket, User, X } from "lucide-react";
 
 import LogoMark from "./LogoMark";
+import { signOut, useSession } from "@/lib/auth-client";
 
 // TODO: replace with client GitHub repository URL
 const DEVELOPER_URL = "#";
@@ -17,15 +19,27 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const reduce = useReducedMotion();
+  const { data: session, isPending } = useSession();
 
-  const handleSignOut = () => {
-    setIsLoggedIn(false);
+  const user = session?.user;
+  const initials =
+    (user?.name ?? "")
+      .split(" ")
+      .filter(Boolean)
+      .map((part) => part[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase() || "U";
+
+  const handleSignOut = async () => {
     setMenuOpen(false);
     setAccountOpen(false);
+    await signOut();
+    router.refresh();
   };
 
   useEffect(() => {
@@ -60,7 +74,12 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-2">
-          {isLoggedIn ? (
+          {isPending ? (
+            <span
+              className="hidden size-10 animate-pulse rounded-full bg-[#EDE6D6] sm:block"
+              aria-hidden="true"
+            />
+          ) : user ? (
             <div className="relative flex items-center gap-2">
               <a
                 href={DEVELOPER_URL}
@@ -74,7 +93,7 @@ const Navbar = () => {
               </a>
               <ChipRoot className="hidden items-center gap-1.5 rounded-full border border-[#E3D9C2] bg-[#EDE6D6] px-3 py-1.5 sm:inline-flex">
                 <Coins className="size-3.5 text-[#4D7C0F]" />
-                <ChipLabel className="font-mono text-xs text-[#1C1917]">250 credits</ChipLabel>
+                <ChipLabel className="font-mono text-xs text-[#1C1917]">{user?.credits ?? 0} credits</ChipLabel>
               </ChipRoot>
               <ButtonRoot
                 onPress={() => setAccountOpen((v) => !v)}
@@ -82,7 +101,7 @@ const Navbar = () => {
                 className="flex size-10 items-center justify-center rounded-full border border-[#E3D9C2] bg-white p-0"
               >
                 <AvatarRoot className="size-8">
-                  <AvatarFallback className="bg-[#C2410C] text-xs text-white">JD</AvatarFallback>
+                  <AvatarFallback className="bg-[#C2410C] text-xs text-white">{initials}</AvatarFallback>
                 </AvatarRoot>
               </ButtonRoot>
               <AnimatePresence>
@@ -96,8 +115,8 @@ const Navbar = () => {
                     className="absolute top-12 right-0 w-60 overflow-hidden rounded-2xl border border-[#E3D9C2] bg-white shadow-xl"
                   >
                   <div className="border-b border-[#EDE6D6] px-4 py-3">
-                    <p className="text-sm font-medium text-[#1C1917]">Jordan Doe</p>
-                    <p className="truncate text-xs text-[#78716C]">jordan@openfund.io</p>
+                    <p className="text-sm font-medium text-[#1C1917]">{user?.name}</p>
+                    <p className="truncate text-xs text-[#78716C]">{user?.email}</p>
                   </div>
                   <nav className="p-1.5" aria-label="Account">
                     {[
@@ -188,7 +207,7 @@ const Navbar = () => {
               ))}
             </nav>
             <div className="space-y-2 border-t border-[#E3D9C2] pt-4">
-              {!isLoggedIn && (
+              {!isPending && !user && (
                 <NextLink
                   href="/sign-in"
                   onClick={() => setMenuOpen(false)}
@@ -208,7 +227,17 @@ const Navbar = () => {
                 <CodeXml className="size-4" />
                 Join as Developer
               </a>
-              {!isLoggedIn && (
+              {user && (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="flex w-full items-center justify-center gap-2 rounded-full border border-[#E3D9C2] bg-white px-4 py-2.5 text-center text-sm font-medium text-red-700"
+                >
+                  <LogOut className="size-4" />
+                  Sign out
+                </button>
+              )}
+              {!isPending && !user && (
                 <NextLink
                   href="/start"
                   onClick={() => setMenuOpen(false)}

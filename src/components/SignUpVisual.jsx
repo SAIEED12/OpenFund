@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import {
@@ -151,8 +152,11 @@ function SignUpAside({ role }) {
 }
 
 export default function SignUpVisual() {
+  const router = useRouter();
   const [role, setRole] = useState("supporter");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const reduce = useReducedMotion();
   const score = scorePassword(password);
@@ -168,17 +172,26 @@ export default function SignUpVisual() {
 
   const onSubmit = async (e) =>{
     e.preventDefault();
+    setError("");
+    setLoading(true);
     const formData = new FormData(e.target)
     const userData = Object.fromEntries(formData.entries())
 
-    const {data, error} = await authClient.signUp.email({
+    const {error} = await authClient.signUp.email({
       name: userData.name,
       email: userData.email,
       password: userData.password,
       role: role,
-      callbackUrl: "/",
+      callbackURL: "/",
     })
-    console.log("Sign up response:", {data, error})
+    setLoading(false);
+
+    if (error) {
+      setError(error.message || "Could not create your account. Please try again.");
+      return;
+    }
+
+    router.push("/");
   }
 
   return (
@@ -308,6 +321,14 @@ export default function SignUpVisual() {
         </motion.div>
 
         <FormRoot className="space-y-4" onSubmit={onSubmit}>
+          {error && (
+            <p
+              role="alert"
+              className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+            >
+              {error}
+            </p>
+          )}
           <motion.div variants={reduce ? undefined : item}>
             <TextFieldRoot name="name" isRequired className="grid gap-2">
               <LabelRoot className="text-sm font-medium">Full name</LabelRoot>
@@ -403,10 +424,11 @@ export default function SignUpVisual() {
           <motion.div variants={reduce ? undefined : item} className="pt-1">
             <ButtonRoot
               type="submit"
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#C2410C] text-[15px] font-semibold text-white shadow-[0_8px_30px_-6px_rgb(194_65_12/0.5)] transition-all hover:-translate-y-px hover:bg-[#9A3412] active:translate-y-0 active:scale-[0.99]"
+              isDisabled={loading}
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#C2410C] text-[15px] font-semibold text-white shadow-[0_8px_30px_-6px_rgb(194_65_12/0.5)] transition-all hover:-translate-y-px hover:bg-[#9A3412] active:translate-y-0 active:scale-[0.99] disabled:translate-y-0 disabled:opacity-60"
             >
-              Create account
-              <ArrowRight className="size-4" />
+              {loading ? "Creating account…" : "Create account"}
+              {!loading && <ArrowRight className="size-4" />}
             </ButtonRoot>
             <div className="mt-4 flex items-center justify-between gap-3">
               <span className="flex items-center gap-2">
