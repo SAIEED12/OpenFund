@@ -209,13 +209,7 @@ const Hero = () => {
             <Heart className="size-3.5 fill-[#C2410C] text-[#C2410C]" />
             New pledge: +$250
           </motion.div>
-          <motion.div
-            className="absolute -bottom-4 -left-2 flex items-center gap-2 rounded-full border border-[#E3D9C2] bg-white px-3.5 py-2 text-xs whitespace-nowrap card-shadow sm:-left-5"
-            animate={reduce ? undefined : { y: [0, -7, 0] }}
-            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1.4 }}
-          >
-            <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-[#4D7C0F] animate-pulse-dot" />
-          </motion.div>
+
         </div>
       </div>
     </section>
